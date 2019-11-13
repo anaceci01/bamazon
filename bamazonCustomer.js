@@ -1,10 +1,13 @@
+<<<<<<< HEAD
 // MySql Connection and Inquirer Import
 var mysql = require ("mysql");
+=======
+var mysql = require("mysql");
+>>>>>>> 5c6fd1bae0eb1a80045ec24af64cbe7059534f9d
 var inquirer = require("inquirer");
 
 const connection = mysql.createConnection({
     host: "localhost",
-<<<<<<< HEAD
     port: 3306,
     user: "root",
     password: "Sonora83",
@@ -33,6 +36,7 @@ function askUser() {
     inquirer.promp({
 
     })
+<<<<<<< HEAD
 }
 =======
     port:3306,
@@ -45,3 +49,6 @@ function askUser() {
 })
 >>>>>>> 44d27ea8c10d3eda1eb89abc60d2bccda0b23c3d
 >>>>>>> refs/remotes/origin/master
+=======
+}
+>>>>>>> 5c6fd1bae0eb1a80045ec24af64cbe7059534f9d
