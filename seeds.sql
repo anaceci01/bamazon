@@ -9,8 +9,8 @@ VALUES ("household", "broom", 7.00, 50),
 ("furniture", "chair", 90.00, 24),
 ("furniture", "bed", 200.00, 10),
 ("furniture", "desk", 700.00, 13),
-("electronic", "tv", 1000.00, 40)
-("electronic", "computer", 1200.00, 40)
-("electronic", "stero", 500.00, 19)
-("electronic", "bluetooth", 150.00, 24)
+("electronic", "tv", 1000.00, 40),
+("electronic", "computer", 1200.00, 40),
+("electronic", "stero", 500.00, 19),
+("electronic", "bluetooth", 150.00, 24),
 ("electronic", "phone", 750.00, 60)
