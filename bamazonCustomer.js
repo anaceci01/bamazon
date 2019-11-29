@@ -9,26 +9,46 @@ const connection = mysql.createConnection({
     database: "bamazon_db"
 });
 
-//array of items in customer's cart
-let cartArr = [];
+connection.connect(function(err, res) {
+    if (err) {
+        throw err;
+    }
+    connection.query("SELECT * FROM PRODUCT", function(err, result) {
+        if (err) {
+            throw err;
+        }
+        inquirer
+            .prompt([{
+                type: "input",
+                message: "this is our first question",
+                name: "first",
+            }])
+            .then(function(answers) {
+                console.log("Bamazon customer loaded")
+                console.log(answers);
+            });
 
-connection.connect(function(err) {
-    if (err) throw err;
-    loadProducts();
-});
+    });
 
-function loadProducts() {
-    var query = "SELECT * FROM products";
-    connection.query(query, function(err, res) {
-        if (err) throw (err);
-        table.log(res)
-            // askUser() to ask customers to chose an item
-    })
-}
+    // function loadProducts() {
+    //     var query = "SELECT * FROM products";
+    //     connection.query(query, function(err, res) {
+    //         if (err) {
+    //             throw (err);
+    //         }
+    //         console.log(res)
+    // askUser() to ask customers to chose an item
+})
 
-function askUser() {
-    // use inquirer package 
-    inquirer.promp({
 
-    })
-}
+
+
+
+
+
+// function askUser() {
+//     // use inquirer package 
+//     inquirer.prompt({
+
+//     })
+// }
