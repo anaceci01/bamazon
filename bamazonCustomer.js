@@ -1,3 +1,4 @@
+// MySql connection //
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
@@ -9,58 +10,39 @@ const connection = mysql.createConnection({
     database: "bamazon"
 });
 
-connection.connect(function(err, res) {
-    if (err) {
-        throw err;
-    }
-    loadProducts();
+connection.connect(function(err) {
+    if (err) throw err;
+    custSelection();
 });
+
+function custSelection() {
+    console.log('--------------------------------')
+    inquirer
+        .prompt({
+            type: "list",
+            name: "selection",
+            message: "What would you like to do?",
+            choices: ["Shop", "View Cart", "Checkout", "Quit"]
+        })
+        .then(function(answers) {
+            if (answers.selection === "Shop") {
+                loadProducts(),
+                    addToCart();
+            } else if (answers.selection === "View Cart") {
+                viewCart();
+            } else if (answers.selection === "Checkout") {
+                checkout();
+            } else if (answers.selection === "Quit") {
+                exitOut();
+            } else {
+                connection.end();
+            }
+        });
+}
 
 function loadProducts() {
     connection.query("SELECT * FROM product", function(err, res) {
         if (err) throw err;
         console.table(res);
-        promptItem(res);
     });
-
-    function promptItem(inventory) {
-        inquirer
-            .prompt([{
-                type: "input",
-                message: "Select the ID of the product you would like to buy",
-                name: "select",
-            }, ])
-            .then(function(answers) {
-                console.log("Bamazon customer loaded")
-                console.log(answers);
-            });
-    };
-
-    // function loadProducts() {
-    //     var query = "SELECT * FROM products";
-    //     connection.query(query, function(err, res) {
-    //         if (err) {
-    //             throw (err);
-    //         }
-    //         console.log(res)
-    // askUser() to ask customers to chose an item
-
-
-
-
-
-
-
-
-    // function askUser() {
-    //     // use inquirer package 
-    //     inquirer.prompt({
-
-    // function loadProducts() {
-    //     var query = "SELECT * FROM products";
-    //     connection.query(query, function(err, res) {
-    //         if (err) throw (err);
-    //         table.log(res)
-    //             // askUser() to ask customers to chose an item
-    //     })
-    //
+}
