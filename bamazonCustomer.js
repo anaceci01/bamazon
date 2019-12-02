@@ -52,26 +52,42 @@ function addToCart() {
         if (err) {
             throw err;
         }
+        //prompt customer what he would like to do
         inquirer.prompt([{
                     type: "input",
                     name: "item_id",
                     message: "Select the Item ID you would like to buy"
                 },
+                // prompt amount desired
                 {
                     type: "input",
                     name: "quantity",
                     message: "How many would you would like to buy?"
                 }
             ])
+            //connect selection with database to update changes
             .then(function(answers) {
                 connection.query("SELECT * FROM product WHERE item_id = ?", [answers.item_id], function(err, result) {
                     if (err) {
                         throw err;
                     }
-                    var amount = result[0].stock_quantity;
-                    if (answers.quantity > amount) {
+                    var quantity = result[0].stock_quantity;
+                    var itemPrice = result[0].price;
+                    var product_sales = result[0].product_sales;
+                    if (answers.quantity > quantity) {
                         console.log("Sorry, we are out of stock!")
+                    } else {
+                        connection.query("UPDATE product SET ? WHERE item_id = ?", [{
+                            stock_quantity: quantity - answers.quantity,
+                            product_sales: product_sales + (itemPrice * answers.quantity)
+                        }, answers.item_id], function(err, result) {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log(result);
+                        })
                     }
+
                 })
             });
     });
