@@ -92,3 +92,10 @@ function addToCart() {
             });
     });
 }
+//function to view cart
+function viewCart() {
+    if (quantity.length < 1) {
+        console.log("Your cart is empty")
+    }
+
+}
