@@ -98,12 +98,11 @@ function addToCart() {
 function viewCart() {
     console.log('--------------------------------')
     console.table(cartArray);
-    let checkoutPrice = cartArray.reduce(function(previous, current) {
-        return previous + current.price;
-    }, 0);
-    console.log('Order total is $${Math.round(totalPrice * 100 / 100'
-    })
+    //     let checkoutPrice = cartArray.reduce(function(previous, current) {
+    //         return previous + current.price;
+    //     }, 0);
+    //     console.log('Order total is $${Math.round(totalPrice * 100 / 100'})
 
-})
-console.log(custSelection());
+    // })
+    console.log(custSelection());
 };
