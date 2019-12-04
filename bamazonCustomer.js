@@ -1,6 +1,7 @@
 // MySql connection //
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var cartArray = [];
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -85,17 +86,24 @@ function addToCart() {
                                 throw err;
                             }
                             console.log(result);
+                            console.log(custSelection());
                         })
+                        cartArray.push(result[0].product_name);
                     }
-
                 })
             });
     });
 }
-//function to view cart
+//View Cart function
 function viewCart() {
-    if (quantity.length < 1) {
-        console.log("Your cart is empty")
-    }
+    console.log('--------------------------------')
+    console.table(cartArray);
+    let checkoutPrice = cartArray.reduce(function(previous, current) {
+        return previous + current.price;
+    }, 0);
+    console.log('Order total is $${Math.round(totalPrice * 100 / 100'
+    })
 
-}
+})
+console.log(custSelection());
+};
