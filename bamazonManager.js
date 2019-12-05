@@ -66,26 +66,7 @@ function lowInventory() {
 }
 // //////////////////////////////////////////////////////////////////////////////////////////////
 // Option to Add to Inventory by Manager
-// //////////////////////////////////////////////////////////////////////////////////////////////
-// function addInventory() {
-//     connection.query("SELECT * FROM product", function(err, res) {
-//                 if (err) throw err;
-//                 inquirer.prompt({
-//                     name: "choice",
-//                     type: "rawlist",
-//                     choices: function() {
-//                         var choiceArr = [];
-//                         for (var i = 0; i < res.length; i++) {
-//                             choiceArr.push(res[i].product_name);
-//                         }
-//                         return choiceArr;
-//                     },
-//                     message: "Please select the inventory to add"
-//                 })
-//                 .then(function(answer){
-//                     let cho
-//                 })
-//             }
+// //////////////////////////////////////////////////////////////////////////////////////////////             }
 function addInventory() {
     connection.query("SELECT * FROM product", function(err, res) {
         inquirer.prompt([{
