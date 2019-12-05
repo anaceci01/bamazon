@@ -1,4 +1,6 @@
-// MySql connection //
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// MySql Connection
+// //////////////////////////////////////////////////////////////////////////////////////////////
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var cartArray = [];
@@ -15,7 +17,10 @@ connection.connect(function(err) {
     if (err) throw err;
     custSelection();
 });
-// give customer a list of selections 
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Customer Selection
+// //////////////////////////////////////////////////////////////////////////////////////////////
+
 function custSelection() {
     console.log('--------------------------------')
     inquirer
@@ -34,20 +39,25 @@ function custSelection() {
             } else if (answers.selection === "Checkout") {
                 checkout();
             } else if (answers.selection === "Quit") {
-                exitOut();
+                process.exit();
             } else {
                 connection.end();
             }
         });
 }
-//products loaded after customer made selection
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Products loaded after selection
+// //////////////////////////////////////////////////////////////////////////////////////////////
+
 function loadProducts() {
     connection.query("SELECT * FROM product", function(err, res) {
         if (err) throw err;
         console.table(res);
     });
 }
-//function to add to cart
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Function Add to Cart
+// //////////////////////////////////////////////////////////////////////////////////////////////
 function addToCart() {
     connection.query("SELECT * FROM product", function(err, res) {
         if (err) {
@@ -94,15 +104,44 @@ function addToCart() {
             });
     });
 }
-//View Cart function
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// View Cart Function
+// //////////////////////////////////////////////////////////////////////////////////////////////
 function viewCart() {
     console.log('--------------------------------')
     console.table(cartArray);
-    //     let checkoutPrice = cartArray.reduce(function(previous, current) {
-    //         return previous + current.price;
-    //     }, 0);
-    //     console.log('Order total is $${Math.round(totalPrice * 100 / 100'})
-
-    // })
     console.log(custSelection());
 };
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Checkout Function
+// //////////////////////////////////////////////////////////////////////////////////////////////
+function checkout() {
+    let totalPrice = cartArray.reduce(function(prev, cur) {
+        return prev + cur.price;
+    }, 0);
+    inquirer
+        .prompt({
+            name: "confirm",
+            type: "confirm",
+            message: "Will this complete your order?"
+        })
+        .then(function(answers) {
+            if (answers.confirm) {
+                console.log("Thank you for your purchase");
+                cartArray = [];
+                custSelection();
+            } else {
+                addToCart();
+            }
+        })
+}
+// //////////////////////////////////////////////////////////////////////////////////////////////
+// Quit Function
+// //////////////////////////////////////////////////////////////////////////////////////////////
+function checkIfShouldExit(choice) {
+    if (choice.toLowerCase() === "q") {
+        // Log a message and exit the current node process
+        console.log("Goodbye!");
+        process.exit(0);
+    }
+}
